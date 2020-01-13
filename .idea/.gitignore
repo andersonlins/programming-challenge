@@ -1,0 +1,10 @@
+**/movies/env
+
+frontend/\.vscode/
+movies/\.coverage
+
+.idea/
+/.env
+/backend.env
+/frontend.env
+/db.env
