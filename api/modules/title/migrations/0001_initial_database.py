@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Movie',
+            name='Title',
             fields=[
                 ('tconst', models.CharField(db_column='tconst', max_length=300, primary_key=True, serialize=False, unique=True)),
                 ('primary_title', models.CharField(db_column='primary_title', max_length=300)),
@@ -34,22 +34,22 @@ class Migration(migrations.Migration):
                 ('start_year', models.IntegerField(db_column='start_year')),
                 ('end_year', models.IntegerField(db_column='end_year', null=True)),
                 ('runtime_minutes', models.IntegerField(db_column='runtime_minutes')),
-                ('genres', models.ManyToManyField(related_name='movies', to='movie.Genre')),
+                ('genres', models.ManyToManyField(related_name='titles', to='title.Genre')),
             ],
             options={
-                'db_table': 'movie',
+                'db_table': 'title',
                 'managed': True,
                 'default_permissions': (),
             },
         ),
         migrations.CreateModel(
-            name='MovieType',
+            name='TitleType',
             fields=[
                 ('id', models.BigAutoField(db_column='id', primary_key=True, serialize=False)),
                 ('name', models.CharField(db_column='name', max_length=100, unique=True)),
             ],
             options={
-                'db_table': 'movie_type',
+                'db_table': 'title_type',
                 'managed': True,
                 'default_permissions': (),
             },
@@ -72,7 +72,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('average_rating', models.FloatField(db_column='average_rating')),
                 ('num_votes', models.IntegerField(db_column='num_votes')),
-                ('tconst', models.ForeignKey(db_column='tconst', db_index=False, on_delete=django.db.models.deletion.DO_NOTHING, related_name='rating', to='movie.Movie')),
+                ('tconst', models.ForeignKey(db_column='tconst', db_index=False, on_delete=django.db.models.deletion.DO_NOTHING, related_name='rating', to='title.Title')),
             ],
             options={
                 'db_table': 'rating',
@@ -87,8 +87,8 @@ class Migration(migrations.Migration):
                 ('primary_name', models.CharField(db_column='primary_name', max_length=120)),
                 ('birth_year', models.IntegerField(db_column='birth_year')),
                 ('death_year', models.IntegerField(db_column='death_year', null=True)),
-                ('know_for_titles', models.ManyToManyField(related_name='persons_movies', to='movie.Movie')),
-                ('professions', models.ManyToManyField(related_name='persons_professions', to='movie.Profession')),
+                ('know_for_titles', models.ManyToManyField(related_name='persons_titles', to='title.Title')),
+                ('professions', models.ManyToManyField(related_name='persons_professions', to='title.Profession')),
             ],
             options={
                 'db_table': 'person',
@@ -97,8 +97,8 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.AddField(
-            model_name='movie',
+            model_name='title',
             name='type',
-            field=models.ForeignKey(db_column='id_movie_type', db_index=False, on_delete=django.db.models.deletion.DO_NOTHING, related_name='movie', to='movie.MovieType'),
+            field=models.ForeignKey(db_column='id_title_type', db_index=False, on_delete=django.db.models.deletion.DO_NOTHING, related_name='title', to='title.TitleType'),
         ),
     ]
