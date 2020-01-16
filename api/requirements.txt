@@ -16,3 +16,7 @@ requests==2.22.0
 freeze==1.0.10
 python-dotenv==0.10.3
 python-dateutil==2.8.0
+
+#database
+#TODO: Docker remeber tip: before install psycopg: sudo apt-get install libpq-dev
+psycopg2==2.7.3.1

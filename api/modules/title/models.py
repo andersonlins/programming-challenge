@@ -2,7 +2,7 @@ import django
 from django.db import models
 
 
-class MovieType(models.Model):
+class Type(models.Model):
     id = models.BigAutoField(
         db_column='id',
         primary_key=True,
@@ -22,7 +22,7 @@ class MovieType(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'movie_type'
+        db_table = 'title_type'
         default_permissions = ()
 
 
@@ -50,7 +50,7 @@ class Genre(models.Model):
         default_permissions = ()
 
 
-class Movie(models.Model):
+class Title(models.Model):
     tconst = models.CharField(
         db_column='tconst',
         max_length=300,
@@ -60,11 +60,11 @@ class Movie(models.Model):
         unique=True
     )
 
-    type = models.ForeignKey(MovieType,
-                             db_column='id_movie_type',
+    type = models.ForeignKey(Type,
+                             db_column='id_title_type',
                              on_delete=django.db.models.deletion.DO_NOTHING,
-                             related_name="movie",
-                             null=False,
+                             related_name="title",
+                             null=True,
                              db_index=False)
 
     primary_title = models.CharField(
@@ -90,33 +90,41 @@ class Movie(models.Model):
 
     start_year = models.IntegerField(
         db_column='start_year',
-        null=False
+        default=None,
+        null=True
     )
 
     end_year = models.IntegerField(
         db_column='end_year',
+        default=None,
         null=True
     )
 
     runtime_minutes = models.IntegerField(
         db_column='runtime_minutes',
-        null=False
+        default=None,
+        null=True
     )
 
-    genres = models.ManyToManyField(Genre,
-                                    blank=False,
-                                    related_name='movies')
+    genres = models.ManyToManyField(Genre, related_name='titles')
 
     def __str__(self):
         return str(self.original_title)
 
     class Meta:
         managed = True
-        db_table = 'movie'
+        db_table = 'title'
         default_permissions = ()
 
 
 class Rating(models.Model):
+    tconst = models.OneToOneField(Title,
+                                  db_column='tconst',
+                                  on_delete=django.db.models.deletion.DO_NOTHING,
+                                  related_name="rating",
+                                  null=False,
+                                  primary_key=True)
+
     average_rating = models.FloatField(
         db_column='average_rating',
         null=False
@@ -126,13 +134,6 @@ class Rating(models.Model):
         db_column='num_votes',
         null=False
     )
-
-    tconst = models.ForeignKey(Movie,
-                               db_column='tconst',
-                               on_delete=django.db.models.deletion.DO_NOTHING,
-                               related_name="rating",
-                               null=False,
-                               db_index=False)
 
     def __str__(self):
         return str(self.average_rating)
@@ -186,21 +187,19 @@ class Person(models.Model):
 
     birth_year = models.IntegerField(
         db_column='birth_year',
-        null=False
+        default=None,
+        null=True
     )
 
     death_year = models.IntegerField(
         db_column='death_year',
+        default=None,
         null=True
     )
 
-    professions = models.ManyToManyField(Profession,
-                                         blank=False,
-                                         related_name='persons_professions')
+    professions = models.ManyToManyField(Profession, related_name='persons_professions')
 
-    know_for_titles = models.ManyToManyField(Movie,
-                                             blank=False,
-                                             related_name='persons_movies')
+    know_for_titles = models.ManyToManyField(Title, related_name='persons_titles')
 
     def __str__(self):
         return str(self.primary_name)
