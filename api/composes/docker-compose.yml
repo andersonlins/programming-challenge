@@ -1,0 +1,33 @@
+version:  "3.3"
+services:
+
+  postgres-img:
+    restart: always
+    image: postgres
+    hostname: postgres-img
+    ports:
+      - 5434:5432
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_DB=titles_db
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - db_data_api:/var/lib/postgresql/data
+
+        
+  api:
+    restart: always
+    image: aandersonlins/movies-api:test
+    ports:
+      - 8001:8001
+    command: ["sh", "-c", "python manage.py migrate && exec gunicorn --access-logfile - -w 4 api.wsgi:application --timeout 300 --log-level debug -b 0.0.0.0:8001"]
+    depends_on:
+      - postgres-img
+    env_file:
+      - backend.env
+
+    
+volumes:
+  db_data_api:
+

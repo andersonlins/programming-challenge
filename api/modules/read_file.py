@@ -11,8 +11,8 @@ class ReadFile:
 
     @staticmethod
     def read_movie_file():
-        tsv_movies = ReadFile.local + 'title.basics.tsv'
-        tsv_rating = ReadFile.local + 'title.ratings.tsv'
+        tsv_movies = ReadFile.local + 'title.basics.tsv.gz'
+        tsv_rating = ReadFile.local + 'title.ratings.tsv.gz'
 
         movies_df = pd.read_csv(tsv_movies, sep='\t', dtype='object', header=0)
         rating_df = pd.read_csv(tsv_rating, sep='\t', dtype='object', header=0)
@@ -33,7 +33,7 @@ class ReadFile:
 
     @staticmethod
     def read_name_file():
-        tsv_names = ReadFile.local + 'name.basics.tsv'
+        tsv_names = ReadFile.local + 'name.basics.tsv.gz'
 
         names_df = pd.read_csv(tsv_names, sep='\t', dtype='object', header=0)
 
