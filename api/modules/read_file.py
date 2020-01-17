@@ -1,18 +1,18 @@
 import os
-from os import path
+import pathlib
+
 
 import pandas as pd
 from sqlalchemy import create_engine
 
 
 class ReadFile:
-    # local = path.abspath(path.join(__file__, "../../../dataset"))
-    local = os.path.dirname(__file__) + '/tests/files/'
+    local = pathlib.Path(__file__).parent.parent.parent
 
     @staticmethod
     def read_movie_file():
-        tsv_movies = ReadFile.local + 'title.basics.tsv.gz'
-        tsv_rating = ReadFile.local + 'title.ratings.tsv.gz'
+        tsv_movies = ReadFile.local.joinpath('files/title.basics.tsv.gz')
+        tsv_rating = ReadFile.local.joinpath('files/title.ratings.tsv.gz')
 
         movies_df = pd.read_csv(tsv_movies, sep='\t', dtype='object', header=0)
         rating_df = pd.read_csv(tsv_rating, sep='\t', dtype='object', header=0)
@@ -33,9 +33,9 @@ class ReadFile:
 
     @staticmethod
     def read_name_file():
-        tsv_names = ReadFile.local + 'name.basics.tsv.gz'
+        tsv_names = ReadFile.local.joinpath('files/name.basics.tsv.gz')
 
-        names_df = pd.read_csv(tsv_names, sep='\t', dtype='object', header=0)
+        names_df = pd.read_csv(tsv_names, sep='\t', dtype='object', header=0, nrows=1000)
 
         names_df.dropna()
         is_not_null = names_df['knownForTitles'] != '\\N'
@@ -54,12 +54,26 @@ class ReadFile:
     @staticmethod
     def import_movies_data():
         movies_df = ReadFile.read_movie_file()
-        engine = create_engine('postgresql://postgres:123456@localhost:5432/titles_db')
+
+        name = os.environ['DB_NAME']
+        user = os.environ['DB_USER']
+        pwd = os.environ['DB_PASSWORD']
+        host = os.environ['DB_HOST']
+        port = os.environ['DB_PORT']
+        connection_string = 'postgresql://{}:{}@{}:{}/{}'.format(user, pwd, host, port, name)
+        engine = create_engine(connection_string)
         movies_df.to_sql('title', engine, if_exists='append', index=False)
 
 
     @staticmethod
     def import_names_data():
         names_df = ReadFile.read_name_file()
-        engine = create_engine('postgresql://postgres:123456@localhost:5432/titles_db')
+
+        name = os.environ['DB_NAME']
+        user = os.environ['DB_USER']
+        pwd = os.environ['DB_PASSWORD']
+        host = os.environ['DB_HOST']
+        port = os.environ['DB_PORT']
+        connection_string = 'postgresql://{}:{}@{}:{}/{}'.format(user, pwd, host, port, name)
+        engine = create_engine(connection_string)
         names_df.to_sql('person', engine, if_exists='append', index=False)
