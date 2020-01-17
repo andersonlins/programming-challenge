@@ -24,11 +24,7 @@ from django.conf import settings
 from modules.title import viewsets
 
 production_router = DefaultRouter()
-production_router.register(r'type', viewset=viewsets.TypeViewSet)
-production_router.register(r'genre', viewset=viewsets.GenreViewSet)
 production_router.register(r'title', viewset=viewsets.TitleViewSet)
-production_router.register(r'rating', viewset=viewsets.RatingViewSet)
-production_router.register(r'profession', viewset=viewsets.ProfessionViewSet)
 production_router.register(r'person', viewset=viewsets.PersonViewSet)
 
 
