@@ -12,15 +12,18 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule, Routes } from '@angular/router';
-import { TitleListComponent } from './modules/title-list/title-list.component';
-import { TitleRatingListComponent } from './modules/title-rating-list/title-rating-list.component';
+import { TitleListComponent } from './modules/title/title-list/title-list.component';
+import { TitleRatingListComponent } from './modules/title/title-rating-list/title-rating-list.component';
+import {MatFormFieldModule, MatPaginatorModule, MatSelectModule, MatTableModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
+import {HttpClient, HttpHandler} from '@angular/common/http';
+import {TitleModule} from './modules/title/title.module';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     AppComponent,
     SideNavComponent,
-    TitleListComponent,
-    TitleRatingListComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,14 @@ import { TitleRatingListComponent } from './modules/title-rating-list/title-rati
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    MatTableModule,
+    TitleModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

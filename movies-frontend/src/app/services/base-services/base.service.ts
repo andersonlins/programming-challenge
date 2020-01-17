@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 export class BaseService<T> {
   protected protocol: string = location.protocol;
   protected hostname: string = location.hostname;
-  private api = ':8000/api/npicontrol/';
+  private api = ':8000/api/titles/';
   protected headers = new Headers(
     {
       'Content-Type': 'application/json',
