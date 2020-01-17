@@ -14,13 +14,6 @@ services:
       - POSTGRES_PASSWORD=admin
     volumes:
       - db_data_api_m:/var/lib/postgresql/data
-  dump:
-    build: Dumper/
-    volumes:
-      - ./Dumper/:/var/db/
-    command: sh -c "sleep 20 && PGPASSWORD=admin pg_restore -h postgres -U postgres -d titles_db < /var/db/titles_db_backup.backup"
-    depends_on:
-      - postgres
         
   api:
     restart: always
@@ -30,7 +23,6 @@ services:
     command: ["sh", "-c", "python manage.py migrate && exec gunicorn --access-logfile - -w 4 api.wsgi:application --timeout 300 --log-level debug -b 0.0.0.0:8000"]
     depends_on:
       - postgres
-      - dump
     env_file:
       - backend.env
 
