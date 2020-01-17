@@ -1,14 +1,12 @@
-import {Type} from './type';
-import {Genre} from './genre';
 
 export class Title {
   tconst: string;
-  type: Type;
+  titleType: string;
   primaryTitle: string;
   originalTitle: string;
   isAdult: boolean;
-  startYear: Date;
-  endYear: Date;
+  startYear: number;
+  endYear: number;
   runtimeMinutes: number;
-  genres: Genre[];
+  genres: string;
 }
