@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 
 
 class ReadFile:
-    local = pathlib.Path(__file__).parent.parent.parent
+    local = pathlib.Path(__file__).parent.parent
 
     @staticmethod
     def read_movie_file():
