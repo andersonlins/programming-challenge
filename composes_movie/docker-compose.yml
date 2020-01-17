@@ -1,10 +1,10 @@
 version:  "3.3"
 services:
 
-  postgres-img:
+  postgres:
     restart: always
     image: postgres:11
-    hostname: postgres-img
+    hostname: postgres
     ports:
       - 5434:5432
     expose:
@@ -13,8 +13,14 @@ services:
       - POSTGRES_DB=titles_db
       - POSTGRES_PASSWORD=admin
     volumes:
-      - db_data_api:/var/lib/postgresql/data
-
+      - db_data_api_m:/var/lib/postgresql/data
+  dump:
+    build: Dumper/
+    volumes:
+      - ./Dumper/:/var/db/
+    command: sh -c "sleep 20 && PGPASSWORD=admin pg_restore -h postgres -U postgres -d titles_db < /var/db/titles_db_backup.backup"
+    depends_on:
+      - postgres
         
   api:
     restart: always
@@ -23,7 +29,8 @@ services:
       - 8000:8000
     command: ["sh", "-c", "python manage.py migrate && exec gunicorn --access-logfile - -w 4 api.wsgi:application --timeout 300 --log-level debug -b 0.0.0.0:8000"]
     depends_on:
-      - postgres-img
+      - postgres
+      - dump
     env_file:
       - backend.env
 
@@ -35,5 +42,5 @@ services:
 
     
 volumes:
-  db_data_api:
+  db_data_api_m:
 
