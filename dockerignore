@@ -1,0 +1,5 @@
+e2e/
+node_modules/
+**/node_modules
+dataset/
+composes_movie/dumper/
