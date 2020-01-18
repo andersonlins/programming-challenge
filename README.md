@@ -1,7 +1,7 @@
 
 # Movies Application
 
-SOBRE O DESENVOLVIMENTO
+<h3>SOBRE O DESENVOLVIMENTO<h3>
 
 A API foi desenvolvida com :
 
@@ -31,14 +31,14 @@ A API foi desenvolvida com :
       Preferi reduzir o caminho para executar a aplicação quando fosse testada, também foi um aprendizado gratificante.
 
 
-*BUILD DA API*
+<h3>BUILD DA API<h3>
 
 
 Ferramentas necessárias para build:
 * Docker
 * Docker Compose
 
-Executando API:
+<h3>Executando API:<h3>
 
 
 Após fazer as instalações necessárias faça os seguintes passos via terminal:
@@ -48,7 +48,7 @@ Após fazer as instalações necessárias faça os seguintes passos via terminal
 * Quando o download  for concluído a api irá executar.
 * Após a inicialização da aplicação pelo terminal linux, quando estiver executando pela primeira vez recomendo aguardar 3 minutos para poder as informações dos arquivos serem importadas através do migrations do banco *
 
-*Teste API:*
+<h3>Teste API:<h3>
 
 Não é necessário autenticação na API. 
 O Django tem uma interface que pode ser usado para teste diretamento do browser.
@@ -64,7 +64,7 @@ Ao acessar a url acima o sistema exibe as rotas disponíveis com auxílio da int
     "person": "http://127.0.0.1:8000/api/titles/person/"
 
 
-*Listar Tipos*
+<h3>Listar<h3>
 
 Método `GET`:
     
