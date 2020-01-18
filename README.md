@@ -74,6 +74,8 @@ Response:
 
 Exemplo de resultado:
 json
+
+```
 [
     {
       "tconst": "tt1326929",
@@ -89,8 +91,7 @@ json
       "numVotes": 7
     }
 ]
-
-
+```
 ### Filtrar Títulos
 
 Por start year
