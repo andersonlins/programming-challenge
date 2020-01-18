@@ -64,7 +64,7 @@ Ao acessar a url acima o sistema exibe as rotas disponíveis com auxílio da int
     "person": "http://127.0.0.1:8000/api/titles/person/"
 
 
-<h3>Listar<h3>
+<h5>Listar<h5>
 
 Método `GET`:
     
